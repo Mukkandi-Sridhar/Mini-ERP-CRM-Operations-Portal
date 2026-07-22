@@ -1,8 +1,12 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm build:types && pnpm build:web",
+  "version": 2,
+  "buildCommand": "pnpm build:types && pnpm build:api && pnpm build:web",
   "outputDirectory": "apps/web/dist",
   "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

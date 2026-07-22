@@ -8,7 +8,7 @@
     "build:types": "pnpm --filter @mini-erp/shared-types build",
     "build:api": "pnpm --filter api build",
     "build:web": "pnpm --filter web build",
-    "build": "pnpm build:types && pnpm build:api && pnpm build:web",
+    "build": "pnpm build:types && pnpm --filter api run prisma:generate && pnpm build:api && pnpm build:web",
     "test:api": "pnpm --filter api test",
     "db:migrate": "pnpm --filter api prisma migrate dev",
     "db:seed": "pnpm --filter api prisma db seed",
