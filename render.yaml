@@ -2,7 +2,7 @@ services:
   - type: web
     name: mini-erp-api
     env: node
-    buildCommand: pnpm install && pnpm build:types && pnpm build:web && pnpm --filter api exec prisma generate && pnpm build:api
+    buildCommand: pnpm build:types && pnpm install && pnpm build:web && pnpm --filter api exec prisma generate && pnpm build:api
     startCommand: pnpm --filter api start:prod
     envVars:
       - key: DATABASE_URL
