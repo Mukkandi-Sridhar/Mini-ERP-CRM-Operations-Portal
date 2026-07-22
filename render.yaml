@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: mini-erp-api
+    env: node
+    buildCommand: pnpm install && pnpm build:types && pnpm --filter api exec prisma generate && pnpm build:api
+    startCommand: pnpm --filter api start:prod
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://neondb_owner:npg_hMIDJAN6ol0t@ep-misty-cherry-azdjzd8h.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
+      - key: JWT_ACCESS_SECRET
+        value: super-secret-access-key-for-mini-erp-crm-2026
+      - key: JWT_REFRESH_SECRET
+        value: super-secret-refresh-key-for-mini-erp-crm-2026
+      - key: CORS_ORIGIN
+        value: "*"
+
+  - type: web
+    name: mini-erp-web
+    env: static
+    buildCommand: pnpm install && pnpm build:types && pnpm build:web
+    staticPublishPath: ./apps/web/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: mini-erp-api
+          property: url
