@@ -4,7 +4,6 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { existsSync } from 'fs';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
@@ -14,9 +13,9 @@ import { ChallansModule } from './modules/challans/challans.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { AppController } from './app.controller';
 
-const webDistPath = existsSync(join(process.cwd(), 'apps', 'web', 'dist'))
-  ? join(process.cwd(), 'apps', 'web', 'dist')
-  : join(__dirname, '..', '..', '..', 'web', 'dist');
+// __dirname = <root>/apps/api/dist/src at runtime
+// 3 levels up from dist/src -> apps -> then web/dist
+const webDistPath = join(__dirname, '..', '..', '..', 'web', 'dist');
 
 @Module({
   controllers: [AppController],
@@ -30,7 +29,11 @@ const webDistPath = existsSync(join(process.cwd(), 'apps', 'web', 'dist'))
     ]),
     ServeStaticModule.forRoot({
       rootPath: webDistPath,
-      exclude: ['/api/(.*)'],
+      exclude: ['/api*'],
+      serveStaticOptions: {
+        // SPA fallback: serve index.html for any route not found as a static file
+        fallthrough: true,
+      },
     }),
     PrismaModule,
     AuthModule,
