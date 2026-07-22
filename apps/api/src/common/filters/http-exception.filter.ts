@@ -32,6 +32,9 @@ export class GlobalHttpExceptionFilter implements ExceptionFilter {
     } else if (exception instanceof Error) {
       message = exception.message;
       error = exception.name;
+      console.error('🚀 Unhandled Error in API filter:', exception);
+    } else {
+      console.error('🚀 Unknown Exception in API filter:', exception);
     }
 
     // Standard global error envelope matching Section 5 of technical spec
