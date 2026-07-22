@@ -19,6 +19,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
+      "@mini-erp/shared-types": ["src/shared-types/index.ts"],
       "@/*": ["src/*"]
     }
   }
