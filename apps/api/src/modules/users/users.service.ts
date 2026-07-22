@@ -1,6 +1,6 @@
 import { Injectable, ConflictException, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { CreateUserDto, UpdateUserDto, buildPaginatedEnvelope, PaginationQueryDto } from '@mini-erp/shared-types';
+import { CreateUserDto, UpdateUserDto, buildPaginatedEnvelope, PaginationQueryDto } from '../../shared-types';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()

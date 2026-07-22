@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ProductsService, ProductQueryDto } from './products.service';
-import { CreateProductDto, UpdateProductDto, StockMovementDto, PaginationQueryDto } from '@mini-erp/shared-types';
+import { CreateProductDto, UpdateProductDto, StockMovementDto, PaginationQueryDto } from '../../shared-types';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';

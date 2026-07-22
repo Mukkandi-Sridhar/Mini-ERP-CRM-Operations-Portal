@@ -11,7 +11,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { ChallansService, ChallanQueryDto } from './challans.service';
-import { CreateChallanDto, UpdateChallanDto } from '@mini-erp/shared-types';
+import { CreateChallanDto, UpdateChallanDto } from '../../shared-types';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';

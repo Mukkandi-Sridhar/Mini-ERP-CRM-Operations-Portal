@@ -11,7 +11,7 @@ import {
   StockMovementDto,
   PaginationQueryDto,
   buildPaginatedEnvelope,
-} from '@mini-erp/shared-types';
+} from '../../shared-types';
 import { MovementType, ReferenceType, ChallanStatus } from '@prisma/client';
 
 export interface ProductQueryDto extends PaginationQueryDto {

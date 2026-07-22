@@ -11,7 +11,7 @@ import {
   CreateFollowUpDto,
   PaginationQueryDto,
   buildPaginatedEnvelope,
-} from '@mini-erp/shared-types';
+} from '../../shared-types';
 import { CustomerStatus, CustomerType, ChallanStatus } from '@prisma/client';
 
 export interface CustomerQueryDto extends PaginationQueryDto {

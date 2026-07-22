@@ -10,7 +10,7 @@ import {
   UpdateChallanDto,
   PaginationQueryDto,
   buildPaginatedEnvelope,
-} from '@mini-erp/shared-types';
+} from '../../shared-types';
 import { ChallanStatus, MovementType, ReferenceType, Prisma } from '@prisma/client';
 
 export interface ChallanQueryDto extends PaginationQueryDto {

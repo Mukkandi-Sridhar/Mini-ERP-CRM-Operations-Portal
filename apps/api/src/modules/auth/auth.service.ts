@@ -8,7 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../../prisma/prisma.service';
 import * as bcrypt from 'bcryptjs';
-import { LoginDto } from '@mini-erp/shared-types';
+import { LoginDto } from '../../shared-types';
 
 @Injectable()
 export class AuthService {
