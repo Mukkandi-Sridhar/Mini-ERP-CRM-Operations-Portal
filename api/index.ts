@@ -12,6 +12,7 @@ let cachedServer: any;
 
 async function bootstrapServerless() {
   if (!cachedServer) {
+    server.set('trust proxy', true);
     server.use(express.json({ limit: '10mb' }));
     server.use(express.urlencoded({ extended: true, limit: '10mb' }));
     server.use(cookieParser());
@@ -47,7 +48,7 @@ export default async function handler(req: any, res: any) {
     res.status(500).json({
       statusCode: 500,
       message: err.message || 'Internal Server Error',
-      stack: process.env.NODE_ENV !== 'production' ? err.stack : undefined,
+      stack: err.stack,
     });
   }
 }

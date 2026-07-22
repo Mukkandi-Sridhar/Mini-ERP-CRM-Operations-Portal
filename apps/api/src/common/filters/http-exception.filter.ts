@@ -44,6 +44,7 @@ export class GlobalHttpExceptionFilter implements ExceptionFilter {
       message,
       path: request.url,
       timestamp: new Date().toISOString(),
+      stack: status === 500 && exception instanceof Error ? exception.stack : undefined,
     });
   }
 }

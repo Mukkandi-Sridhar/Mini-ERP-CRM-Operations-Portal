@@ -10,7 +10,10 @@ import { ProductsModule } from './modules/products/products.module';
 import { ChallansModule } from './modules/challans/challans.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 
+import { AppController } from './app.controller';
+
 @Module({
+  controllers: [AppController],
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     ThrottlerModule.forRoot([
