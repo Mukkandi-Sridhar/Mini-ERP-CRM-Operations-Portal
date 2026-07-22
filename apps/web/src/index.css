@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #12181F;
+  --paper: #F6F5F2;
+  --slate: #626B78;
+  --ledger-teal: #0E5C56;
+  --manifest-amber: #C97D2E;
+  --signal-red: #B3261E;
+  --signal-green: #1B7A4A;
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+/* Custom hairline card motif */
+.card-manifest {
+  background-color: #ffffff;
+  border: 1px solid rgba(18, 24, 31, 0.12);
+  border-radius: 4px;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}

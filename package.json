@@ -1,0 +1,22 @@
+{
+  "name": "mini-erp-crm-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev:api": "pnpm --filter api start:dev",
+    "dev:web": "pnpm --filter web dev",
+    "build:types": "pnpm --filter @mini-erp/shared-types build",
+    "build:api": "pnpm --filter api build",
+    "build:web": "pnpm --filter web build",
+    "build": "pnpm build:types && pnpm build:api && pnpm build:web",
+    "test:api": "pnpm --filter api test",
+    "db:migrate": "pnpm --filter api prisma migrate dev",
+    "db:seed": "pnpm --filter api prisma db seed",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5"
+  }
+}
