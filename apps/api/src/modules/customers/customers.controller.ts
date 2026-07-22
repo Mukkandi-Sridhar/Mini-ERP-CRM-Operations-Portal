@@ -15,7 +15,6 @@ import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { GetUser } from '../../common/decorators/get-user.decorator';
-import { Role, User } from '@prisma/client';
 
 @Controller('customers')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -23,47 +22,47 @@ export class CustomersController {
   constructor(private customersService: CustomersService) {}
 
   @Get()
-  @Roles(Role.Admin, Role.Sales, Role.Accounts)
+  @Roles('Admin', 'Sales', 'Accounts')
   findAll(@Query() query: CustomerQueryDto) {
     return this.customersService.findAll(query);
   }
 
   @Get(':id')
-  @Roles(Role.Admin, Role.Sales, Role.Accounts)
+  @Roles('Admin', 'Sales', 'Accounts')
   findOne(@Param('id') id: string) {
     return this.customersService.findOne(id);
   }
 
   @Post()
-  @Roles(Role.Admin, Role.Sales)
-  create(@Body() dto: CreateCustomerDto, @GetUser() user: User) {
+  @Roles('Admin', 'Sales')
+  create(@Body() dto: CreateCustomerDto, @GetUser() user: any) {
     return this.customersService.create(dto, user.id);
   }
 
   @Patch(':id')
-  @Roles(Role.Admin, Role.Sales)
+  @Roles('Admin', 'Sales')
   update(@Param('id') id: string, @Body() dto: UpdateCustomerDto) {
     return this.customersService.update(id, dto);
   }
 
   @Delete(':id')
-  @Roles(Role.Admin)
+  @Roles('Admin')
   softDelete(@Param('id') id: string) {
     return this.customersService.softDelete(id);
   }
 
   @Post(':id/follow-ups')
-  @Roles(Role.Admin, Role.Sales)
+  @Roles('Admin', 'Sales')
   addFollowUp(
     @Param('id') id: string,
     @Body() dto: CreateFollowUpDto,
-    @GetUser() user: User,
+    @GetUser() user: any,
   ) {
     return this.customersService.addFollowUp(id, dto, user.id);
   }
 
   @Get(':id/follow-ups')
-  @Roles(Role.Admin, Role.Sales, Role.Accounts)
+  @Roles('Admin', 'Sales', 'Accounts')
   getFollowUps(@Param('id') id: string, @Query() query: PaginationQueryDto) {
     return this.customersService.getFollowUps(id, query);
   }

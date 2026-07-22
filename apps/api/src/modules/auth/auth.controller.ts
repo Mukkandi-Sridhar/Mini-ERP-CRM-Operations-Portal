@@ -32,7 +32,7 @@ export class AuthController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @Throttle({ default: { limit: 5, ttl: 60000 } })
-  async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: Response) {
+  async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: any) {
     const result = await this.authService.login(dto);
 
     // Set httpOnly refresh cookie (7 days)
@@ -46,7 +46,7 @@ export class AuthController {
 
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  async refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+  async refresh(@Req() req: any, @Res({ passthrough: true }) res: any) {
     const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
     const result = await this.authService.refresh(refreshToken);
 
@@ -60,7 +60,7 @@ export class AuthController {
 
   @Post('logout')
   @HttpCode(HttpStatus.OK)
-  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+  async logout(@Req() req: any, @Res({ passthrough: true }) res: any) {
     const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
     await this.authService.logout(refreshToken);
     res.clearCookie('refreshToken', getCookieOptions());
@@ -69,7 +69,7 @@ export class AuthController {
 
   @Get('me')
   @UseGuards(JwtAuthGuard)
-  getMe(@GetUser() user: User) {
+  getMe(@GetUser() user: any) {
     return {
       id: user.id,
       name: user.name,

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "pnpm build:types && pnpm --filter api run prisma:generate && pnpm build:api && pnpm build:web",
+  "buildCommand": "pnpm build:types && pnpm --filter api exec prisma generate && pnpm build:api && pnpm build:web",
   "outputDirectory": "apps/web/dist",
   "rewrites": [
     {

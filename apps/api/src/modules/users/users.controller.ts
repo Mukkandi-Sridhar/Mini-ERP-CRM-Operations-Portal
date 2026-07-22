@@ -13,11 +13,10 @@ import { CreateUserDto, UpdateUserDto, PaginationQueryDto } from '@mini-erp/shar
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
-import { Role } from '@prisma/client';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(Role.Admin)
+@Roles('Admin')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 

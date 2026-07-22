@@ -2,7 +2,6 @@ import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { GetUser } from '../../common/decorators/get-user.decorator';
-import { User } from '@prisma/client';
 
 @Controller('dashboard')
 @UseGuards(JwtAuthGuard)
@@ -10,7 +9,7 @@ export class DashboardController {
   constructor(private dashboardService: DashboardService) {}
 
   @Get('summary')
-  getSummary(@GetUser() user: User) {
+  getSummary(@GetUser() user: any) {
     return this.dashboardService.getSummary({ id: user.id, role: user.role });
   }
 
