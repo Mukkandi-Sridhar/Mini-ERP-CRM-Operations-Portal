@@ -301,20 +301,32 @@ export class ChallansService {
       // 3. Generate gapless Challan Number using atomic ChallanSequence table locked FOR UPDATE
       const now = new Date();
       const yearMonth = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}`;
+      const prefix = `CH-${yearMonth}-`;
 
       const sequenceLock: Array<{ yearMonth: string; lastValue: number }> =
         await tx.$queryRaw`SELECT "yearMonth", "lastValue" FROM "ChallanSequence" WHERE "yearMonth" = ${yearMonth} FOR UPDATE`;
 
       let nextSeq = 1;
       if (!sequenceLock || sequenceLock.length === 0) {
-        await tx.$executeRaw`INSERT INTO "ChallanSequence" ("yearMonth", "lastValue") VALUES (${yearMonth}, 1)`;
-        nextSeq = 1;
+        // Look up max existing challan number for this prefix to prevent collision with seeded challans
+        const existingMax = await tx.challan.findFirst({
+          where: { challanNumber: { startsWith: prefix } },
+          orderBy: { challanNumber: 'desc' },
+        });
+        if (existingMax && existingMax.challanNumber) {
+          const parts = existingMax.challanNumber.split('-');
+          if (parts.length === 3) {
+            const lastNum = parseInt(parts[2], 10);
+            if (!isNaN(lastNum)) nextSeq = lastNum + 1;
+          }
+        }
+        await tx.$executeRaw`INSERT INTO "ChallanSequence" ("yearMonth", "lastValue") VALUES (${yearMonth}, ${nextSeq})`;
       } else {
         nextSeq = sequenceLock[0].lastValue + 1;
         await tx.$executeRaw`UPDATE "ChallanSequence" SET "lastValue" = ${nextSeq} WHERE "yearMonth" = ${yearMonth}`;
       }
 
-      const challanNumber = `CH-${yearMonth}-${String(nextSeq).padStart(6, '0')}`;
+      const challanNumber = `${prefix}${String(nextSeq).padStart(6, '0')}`;
 
       // Update movement reasons with final challan number
       await tx.stockMovement.updateMany({
